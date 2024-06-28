@@ -1,4 +1,5 @@
-﻿using DapperNight.Services.CategoryServices;
+﻿using DapperNight.Dtos.CategoryDtos;
+using DapperNight.Services.CategoryServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DapperNight.Controllers
@@ -14,6 +15,24 @@ namespace DapperNight.Controllers
         {
             var values = await _categoryService.GetAllCategoryAsync();
             return View(values);
+        }
+
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
+        {
+            await _categoryService.CreateCategoryAsync(createCategoryDto);
+            return RedirectToAction("CategoryList");
+        }
+
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            await _categoryService.DeleteCategoryAsync(id);
+            return RedirectToAction("CategoryList");
         }
     }
 }
