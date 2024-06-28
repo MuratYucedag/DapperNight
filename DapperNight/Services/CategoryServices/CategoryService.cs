@@ -47,9 +47,14 @@ namespace DapperNight.Services.CategoryServices
             return values;
         }
 
-        public Task UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)
+        public async Task UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)
         {
-            throw new NotImplementedException();
+            string query = "Update TblCategory Set CategoryName=@categoryName Where CategoryId=@categoryId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@categoryName", updateCategoryDto.CategoryName);
+            parameters.Add("@categoryId", updateCategoryDto.CategoryId);
+            var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query, parameters);
         }
     }
 }
