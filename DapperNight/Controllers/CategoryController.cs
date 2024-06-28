@@ -34,5 +34,17 @@ namespace DapperNight.Controllers
             await _categoryService.DeleteCategoryAsync(id);
             return RedirectToAction("CategoryList");
         }
+        public async Task<IActionResult> UpdateCategory(int id)
+        {
+            var value=await _categoryService.GetByIdCategoryAsync(id);
+            return View(value);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        {
+            await _categoryService.UpdateCategoryAsync(updateCategoryDto);
+            return RedirectToAction("CategoryList");
+        }
     }
 }
