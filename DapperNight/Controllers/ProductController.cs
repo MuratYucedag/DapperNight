@@ -33,5 +33,16 @@ namespace DapperNight.Controllers
             await _productService.DeleteProductAsync(id);
             return RedirectToAction("ProductList");
         }
+        public async Task<IActionResult> UpdateProduct(int id)
+        {
+            var value = await _productService.GetByIdProductAsync(id);
+            return View(value);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
+        {
+            await _productService.UpdateProductAsync(updateProductDto);
+            return RedirectToAction("ProductList");
+        }
     }
 }
