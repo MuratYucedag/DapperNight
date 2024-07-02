@@ -37,6 +37,15 @@ namespace DapperNight.Services.ProductServices
             var values = await connection.QueryAsync<ResultProductDto>(query);
             return values.ToList();
         }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
+        {
+            string query = "SELECT dbo.TblProduct.ProductId, dbo.TblProduct.Name, dbo.TblProduct.Stock, dbo.TblProduct.Price, dbo.TblCategory.CategoryName FROM  dbo.TblCategory INNER JOIN dbo.TblProduct ON dbo.TblCategory.CategoryId = dbo.TblProduct.CategoryId";
+            var connection = _context.CreateConnection();
+            var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+            return values.ToList();
+        }
+
         public async Task<GetByIdProductDto> GetByIdProductAsync(int id)
         {
             string query = "Select * From TblProduct Where ProductId=@productId";
